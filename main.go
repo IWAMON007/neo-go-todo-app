@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func home(w http.ResponseWriter, r *http.Request) {
 	h := `<h1>計算できる</h1>`
 	form := `<form action="/cal" method="GET"><input name="length"><input type="submit"></form>`
 
@@ -29,7 +29,7 @@ func calSquareArea(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/", home)
 	http.HandleFunc("/cal", calSquareArea)
 	http.ListenAndServe(":8080", nil)
 }
