@@ -26,13 +26,22 @@ func calSquareArea(w http.ResponseWriter, r *http.Request) {
 	}
 
 	area := oneSide * oneSide
-	p := "<p>One side length : " + l + " Squar = " + strconv.Itoa(area) + "</p> "
-	a := `<a href="/">ここをクリック</a>`
-	fmt.Fprint(w, p+a)
+
+	html, err := template.ParseFiles("home.html")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	html.Execute(w, area)
 }
 
 func main() {
-	http.HandleFunc("/", home)
-	http.HandleFunc("/cal", calSquareArea)
+	route := map[string]func(w http.ResponseWriter, r *http.Request){
+		"/":    home,
+		"/cal": calSquareArea,
+	}
+	for r, h := range route {
+		http.HandleFunc(r, h)
+	}
 	http.ListenAndServe(":8080", nil)
 }

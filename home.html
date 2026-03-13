@@ -8,8 +8,10 @@
 <body>
     <h1>正方形の面積の計算</h1>
     <form action="/cal" method="get">
-        <input name="length">
+        <input name="length" type="number">
         <input type="submit" value="計算">
     </form>
+
+    <p>{{ . }}</p>
 </body>
 </html>
