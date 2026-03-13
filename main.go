@@ -2,15 +2,18 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 	"strconv"
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
-	h := `<h1>計算できる</h1>`
-	form := `<form action="/cal" method="GET"><input name="length"><input type="submit"></form>`
-
-	fmt.Fprintln(w, h+form)
+	html, err := template.ParseFiles("home.html")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	html.Execute(w, nil)
 }
 
 func calSquareArea(w http.ResponseWriter, r *http.Request) {
