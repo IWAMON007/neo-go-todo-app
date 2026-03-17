@@ -15,7 +15,7 @@ var nextID int = 1
 
 // htmlを事前にパース
 // hmtlにエラーがあれば、ここで止まる
-var homeHTML = template.Must(template.ParseFiles("home.html"))
+var homeHTML = template.Must(template.ParseFiles("views/home.html"))
 
 // 初期表示時
 func home(w http.ResponseWriter, _ *http.Request) {
