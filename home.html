@@ -3,16 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TODOアプリ</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: sans-serif;
+            background: #f5f5f3;
+            color: #1a1a1a;
+        }
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+        .form-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .form-row input[type="text"] {
+            flex: 1;
+            padding: 8px 12px;
+            border: 0.5px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+        .form-row input[type="text"]:focus {
+            border-color: #888;
+        }
+        .form-row input[type="submit"] {
+            padding: 8px 16px;
+            border: 0.5px solid #ccc;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .form-row input[type="submit"]:hover {
+            background: #f0f0f0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 0.5px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+        thead {
+            background: #f8f8f6;
+        }
+        thead th {
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #666;
+            text-align: left;
+            border-bottom: 0.5px solid #ddd;
+        }
+        tbody tr {
+            border-bottom: 0.5px solid #eee;
+        }
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+        tbody td {
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+        .id-cell {
+            color: #999;
+            font-size: 13px;
+            width: 60px;
+        }
+    </style>
 </head>
 <body>
-    <h1>TODOアプリ</h1>
-    <form action="/task" method="get">
-        <input name="task" type="text">
-        <input type="submit" value="追加">
-    </form>
-    {{ range . }}
-        <p id="{{ .ID }}">{{ .Task }}</p>
-    {{ end }}
+    <div class="container">
+        <h1>TODOアプリ</h1>
+        <form action="/task" method="get" class="form-row">
+            <input name="task" type="text" placeholder="タスクを入力しよう！！">
+            <input type="submit" value="追加">
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th class="id-cell">ID</th>
+                    <th>タスク</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ range . }}
+                <tr>
+                    <td class="id-cell">{{ .ID }}</td>
+                    <td>{{ .Task }}</td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
