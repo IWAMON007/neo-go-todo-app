@@ -18,6 +18,7 @@
                 <tr>
                     <th class="id-cell">ID</th>
                     <th>タスク</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +26,9 @@
                 <tr>
                     <td class="id-cell">{{ .ID }}</td>
                     <td>{{ .Task }}</td>
+                    <td class="delete-button">
+                        <a>削除</a>
+                    </td>
                 </tr>
                 {{ end }}
             </tbody>
@@ -32,3 +36,15 @@
     </div>
 </body>
 </html>
+
+<script>
+    document.querySelectorAll('.delete-button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tr = this.closest('tr');
+            const taskId = tr.querySelector('.id-cell').textContent.trim();
+            console.log('削除するID:', taskId);
+
+            window.location.href = `/task/delete?id=${taskId}`
+        });
+    });
+</script>

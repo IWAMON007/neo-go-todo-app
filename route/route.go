@@ -3,6 +3,7 @@ package route
 import (
 	"html/template"
 	"net/http"
+	"strconv"
 )
 
 type Todo struct {
@@ -32,11 +33,26 @@ func addTask(w http.ResponseWriter, r *http.Request) {
 	homeHTML.Execute(w, TodoList)
 }
 
+// タスクの削除
+func deteleTask(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.Query().Get("id")
+	taskId, _ := strconv.Atoi(id)
+
+	for i, t := range TodoList {
+		if t.ID == taskId {
+			TodoList = append(TodoList[:i], TodoList[i+1:]...)
+		}
+	}
+
+	homeHTML.Execute(w, TodoList)
+}
+
 // ルーティング設定
 func SetRoute() {
 	route := map[string]func(w http.ResponseWriter, r *http.Request){
-		"/":     home,
-		"/task": addTask,
+		"/":            home,
+		"/task":        addTask,
+		"/task/delete": deteleTask,
 	}
 
 	for r, h := range route {

@@ -1,7 +1,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
     font-family: sans-serif;
-    background: #f5f5f3;
+    background: #ebe6d2;
     color: #1a1a1a;
 }
 .container {
@@ -74,4 +74,21 @@ tbody td {
     color: #999;
     font-size: 13px;
     width: 60px;
+}
+.delete-button {
+    text-align: right;
+}
+
+.delete-button a {
+    color: #e53e3e;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.delete-button a:hover {
+    background: #ffe4e4;
+    color: #c53030;
 }
