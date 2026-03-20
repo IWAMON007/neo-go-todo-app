@@ -1,4 +1,8 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
     font-family: sans-serif;
@@ -47,10 +51,30 @@ h1 {
 table {
     width: 100%;
     border-collapse: collapse;
-    border: 0.5px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
     background: white;
+    border-radius: 8px;
+}
+
+.table-wrapper {
+    border: 0.5px solid #ddd;
+    overflow: visible;
+}
+
+/* テーブル4隅のセルに直接角丸を当てる */
+thead th:first-child {
+    border-top-left-radius: 8px;
+}
+
+thead th:last-child {
+    border-top-right-radius: 8px;
+}
+
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
 }
 
 thead {
@@ -75,7 +99,7 @@ tbody tr:last-child {
 }
 
 tbody td {
-    padding: 12px 16px;
+    padding: 6px 16px;
     font-size: 14px;
 }
 
@@ -83,4 +107,69 @@ tbody td {
     color: #999;
     font-size: 13px;
     width: 60px;
+}
+
+.delete-button {
+    text-align: right;
+    width: 60px;
+}
+
+.delete-button a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #e53e3e;
+    background: transparent;
+    color: #e53e3e;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.delete-button a svg {
+    width: 15px;
+    height: 15px;
+    display: block;
+}
+
+.delete-button a:hover {
+    background: #e53e3e;
+    color: #ffffff;
+    border-color: #e53e3e;
+    transform: scale(1.1);
+}
+
+/* カスタムツールチップ */
+.delete-button a[data-tooltip] {
+    position: relative;
+}
+
+.delete-button a[data-tooltip]::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 20px;
+    left: 25px;
+    transform: translate(-6px, 6px);
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 11px;
+    line-height: 1.5;
+    white-space: nowrap;
+    padding: 5px 10px;
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e0e0e0;
+    z-index: 10;
+}
+
+
+
+.delete-button a[data-tooltip]:hover::before {
+    opacity: 1;
+    transform: translate(0, 0);
 }

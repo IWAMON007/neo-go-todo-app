@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/views/home.css">
     <title>TODOアプリ</title>
 </head>
+
 <body>
     <div class="container">
-        
+
         <div class="header-row">
             <h1>TODOアプリ</h1>
             <a href="/done/list" class="done-link">完了したタスク</a>
@@ -24,34 +26,36 @@
                     <th class="id-cell">ID</th>
                     <th>タスク</th>
                     <th></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 {{ range . }}
-                    {{ if not .IsDone }}
-                    <tr>
-                        <td class="id-cell">{{ .ID }}</td>
-                        <td>{{ .Task }}</td>
-                        <td class="done-button">
-                            <a>完了！</a>
-                        </td>
-                        <td class="delete-button">
-                            <a>削除</a>
-                        </td>
-                    </tr>
-                    {{ end }}
+                {{ if not .IsDone }}
+                <tr>
+                    <td class="id-cell">{{ .ID }}</td>
+                    <td>{{ .Task }}</td>
+                    <td class="done-button">
+                        <a>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                {{ end }}
                 {{ end }}
             </tbody>
         </table>
     </div>
 </body>
+
 </html>
 
 <script>
     // 完了ボタン
     document.querySelectorAll('.done-button').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const tr = this.closest('tr');
             const taskId = tr.querySelector('.id-cell').textContent.trim();
             console.log('完了するID:', taskId);
@@ -59,17 +63,4 @@
             window.location.href = `/task/done?id=${taskId}`
         });
     });
-
-    // 削除ボタン
-    document.querySelectorAll('.delete-button').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const tr = this.closest('tr');
-            const taskId = tr.querySelector('.id-cell').textContent.trim();
-            console.log('削除するID:', taskId);
-
-            window.location.href = `/task/delete?id=${taskId}`
-        });
-    });
-
-
 </script>

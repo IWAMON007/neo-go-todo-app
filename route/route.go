@@ -66,7 +66,7 @@ func deteleTask(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	homeHTML.Execute(w, TodoList)
+	doneListHTML.Execute(w, TodoList)
 }
 
 // ルーティング設定
