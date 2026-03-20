@@ -19,10 +19,15 @@ var nextID int = 1
 // htmlを事前にパース
 // hmtlにエラーがあれば、ここで止まる
 var homeHTML = template.Must(template.ParseFiles("views/home.html"))
+var doneListHTML = template.Must(template.ParseFiles("views/done_list.html"))
 
 // 初期表示時
 func home(w http.ResponseWriter, _ *http.Request) {
 	homeHTML.Execute(w, TodoList)
+}
+
+func doneList(w http.ResponseWriter, _ *http.Request) {
+	doneListHTML.Execute(w, TodoList)
 }
 
 // タスクの追加
@@ -68,6 +73,7 @@ func deteleTask(w http.ResponseWriter, r *http.Request) {
 func SetRoute() {
 	route := map[string]func(w http.ResponseWriter, r *http.Request){
 		"/":            home,
+		"/done/list":   doneList,
 		"/task":        addTask,
 		"/task/delete": deteleTask,
 		"/task/done":   doneTask,

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/views/done_list.css">
+    <title>TODOアプリ</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header-row">
+            <a href="/" class="back-link">← 戻る</a>
+            <h1>完了したタスク！</h1>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="id-cell">ID</th>
+                    <th>タスク</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ range . }}
+                    {{ if .IsDone }}
+                    <tr>
+                        <td class="id-cell">{{ .ID }}</td>
+                        <td>{{ .Task }}</td>
+                        <td class="done">
+                            完了！
+                        </td>
+                    </tr>
+                    {{ end }}
+                {{ end }}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
