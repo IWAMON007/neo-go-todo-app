@@ -1,8 +1,10 @@
 package route
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
+	"io"
 	"net/http"
 	"strconv"
 )
@@ -40,6 +42,7 @@ func addTask(w http.ResponseWriter, r *http.Request) {
 	homeHTML.Execute(w, TodoList)
 }
 
+// タスクの完了
 func doneTask(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
 	taskId, _ := strconv.Atoi(id)
@@ -69,6 +72,31 @@ func deteleTask(w http.ResponseWriter, r *http.Request) {
 	doneListHTML.Execute(w, TodoList)
 }
 
+// タスクの編集
+func updateTask(w http.ResponseWriter, r *http.Request) {
+	var newTask Todo
+
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "読み取り失敗", http.StatusInternalServerError)
+		return
+	}
+	defer r.Body.Close()
+
+	fmt.Printf("受信データ: %s\n", string(body))
+
+	json.Unmarshal(body, &newTask)
+
+	for i, t := range TodoList {
+		if t.ID == newTask.ID {
+			TodoList[i].Task = newTask.Task
+		}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"message": "success"}`))
+}
+
 // ルーティング設定
 func SetRoute() {
 	route := map[string]func(w http.ResponseWriter, r *http.Request){
@@ -77,6 +105,7 @@ func SetRoute() {
 		"/task":        addTask,
 		"/task/delete": deteleTask,
 		"/task/done":   doneTask,
+		"/task/update": updateTask,
 	}
 
 	for r, h := range route {

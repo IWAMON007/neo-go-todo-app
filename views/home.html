@@ -26,6 +26,7 @@
                     <th class="id-cell">ID</th>
                     <th>タスク</th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -33,7 +34,14 @@
                 {{ if not .IsDone }}
                 <tr>
                     <td class="id-cell">{{ .ID }}</td>
-                    <td>{{ .Task }}</td>
+                    <td class="task-cell">{{ .Task }}</td>
+                    <td class="edit-task">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                        </svg>
+                    </td>
                     <td class="done-button">
                         <a>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -61,6 +69,76 @@
             console.log('完了するID:', taskId);
 
             window.location.href = `/task/done?id=${taskId}`
+        });
+    });
+
+    const PENCIL_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+    </svg>`;
+
+    // タスクの編集
+    document.querySelectorAll('.edit-task').forEach(editCell => {
+        editCell.addEventListener('click', function () {
+            const tr = this.closest('tr');
+            const taskCell = tr.querySelector('.task-cell');
+            const taskId = tr.querySelector('.id-cell').textContent.trim();
+            const currentText = taskCell.textContent.trim();
+
+            // すでに編集中の場合は何もしない
+            if (taskCell.querySelector('input')) return;
+
+            // ── task-cell: inputのみ ──
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentText;
+            input.className = 'task-edit-input';
+            taskCell.textContent = '';
+            taskCell.appendChild(input);
+            input.focus();
+
+            // ── edit-task: 保存ボタン＋✕ボタン ──
+            const saveBtn = document.createElement('button');
+            saveBtn.textContent = '保存';
+            saveBtn.className = 'task-save-btn';
+
+            const cancelBtn = document.createElement('button');
+            cancelBtn.innerHTML = '&times;';
+            cancelBtn.className = 'task-cancel-btn';
+
+            editCell.textContent = '';
+            editCell.appendChild(saveBtn);
+            editCell.appendChild(cancelBtn);
+
+            // 保存処理
+            saveBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const newTask = input.value.trim();
+                if (!newTask) return;
+
+                fetch('/task/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ ID: Number(taskId), Task: newTask, IsDone: false }),
+                })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+
+                taskCell.textContent = newTask;
+                editCell.innerHTML = PENCIL_SVG;
+                console.log('保存:', taskId, newTask);
+            });
+
+            // キャンセル処理
+            cancelBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                taskCell.textContent = currentText;
+                editCell.innerHTML = PENCIL_SVG;
+            });
         });
     });
 </script>

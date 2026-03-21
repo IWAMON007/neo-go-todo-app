@@ -1,4 +1,8 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
     font-family: sans-serif;
@@ -114,6 +118,30 @@ tbody td {
     width: 60px;
 }
 
+.edit-task {
+    text-align: center;
+    width: 116px;
+    cursor: pointer;
+    color: #aaa;
+    transition: color 0.2s;
+}
+
+.edit-task:hover {
+    color: #000000;
+}
+
+.edit-task:hover svg {
+    stroke-width: 3;
+    height: 24px;
+}
+
+.edit-task svg {
+    height: 22px;
+    display: block;
+    margin: 0 auto;
+    pointer-events: none;
+}
+
 .done-button {
     text-align: right;
     width: 60px;
@@ -167,4 +195,63 @@ tbody td {
 .delete-button a:hover {
     background: #ffe4e4;
     color: #c53030;
+}
+
+/* インライン編集 */
+.task-edit-input {
+    padding: 4px 8px;
+    border: 1px solid #888;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    background: #fafaf7;
+    transition: border-color 0.2s;
+}
+
+.task-edit-input:focus {
+    border-color: #639922;
+}
+
+.task-save-btn,
+.task-cancel-btn {
+    margin-left: 6px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.task-save-btn {
+    background: #ffffff;
+    color: #3079d3;
+    border-color: #3079d3;
+}
+
+.task-save-btn:hover {
+    background: #3079d3;
+    border-color: #00419c;
+    color: #ffffff;
+}
+
+.task-cancel-btn {
+    background: white;
+    color: #c53030;
+    border-color: #e8a0a0;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.task-cancel-btn:hover {
+    background: #ffe4e4;
+    border-color: #c53030;
 }
