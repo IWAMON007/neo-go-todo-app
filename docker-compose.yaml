@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080" # ローカルの8080番で、コンテナ内の8080番にアクセス
+    volumes:
+      - type: bind # ローカルとコンテナを同期
+        source: . # 同期元のローカルパス（現在のディレクトリ）
+        target: /app # 同期先のコンテナパス
+      - type: volume # コンテナ内のみで管理（ローカルのマウントから切り離す）
+        target: /app/bin # 実行ファイルはコンテナのものを使う
+    environment:
+      - APP_ENV=development
