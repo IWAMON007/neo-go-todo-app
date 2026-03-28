@@ -1,0 +1,351 @@
+/* ===================================================
+   Base Styles — Neo Go TODO App
+   =================================================== */
+
+/* ---------- Google Fonts ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ---------- CSS Variables (Design Tokens) ---------- */
+:root {
+    /* Colors — warm cream + yellow-green accent */
+    --color-bg: #f0ece5;               /* ベース背景：クリームイエロー */
+    --color-surface: #ffffff;           /* カード・テーブル面 */
+    --color-surface-alt: #f9f9e6;       /* テーブルヘッダー・ホバー面 */
+    --color-border: #d0d0a8;            /* 柔らかいボーダー */
+    --color-primary: #7cb518;           /* アクセント：黄緑 */
+    --color-primary-dark: #5d8c0e;      /* 黄緑ダーク */
+    --color-primary-light: #a8d44a;     /* 黄緑ライト */
+    --color-primary-glow: rgba(124, 181, 24, 0.18); /* 黄緑グロー */
+    --color-success: #5aaa5a;           /* 落ち着いたグリーン */
+    --color-danger: #c0504a;            /* 落ち着いたレッド */
+    --color-warning: #c88a00;           /* アンバー */
+    --color-text: #3a3a28;              /* メインテキスト：ダーク暖色 */
+    --color-text-muted: #6a6a4e;        /* サブテキスト */
+    --color-text-dim: #a0a080;          /* プレースホルダー等 */
+
+    /* Typography */
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-size-xs: 0.75rem;    /* 12px */
+    --font-size-sm: 0.875rem;   /* 14px */
+    --font-size-base: 1rem;     /* 16px */
+    --font-size-lg: 1.125rem;   /* 18px */
+    --font-size-xl: 1.375rem;   /* 22px */
+    --font-size-2xl: 1.75rem;   /* 28px */
+    --font-size-3xl: 2.25rem;   /* 36px */
+
+    /* Spacing */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+
+    /* Border Radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+
+    /* Shadows — 暖色系の柔らかい影 */
+    --shadow-sm: 0 1px 4px rgba(80, 80, 40, 0.10);
+    --shadow-md: 0 4px 16px rgba(80, 80, 40, 0.13);
+    --shadow-lg: 0 8px 32px rgba(80, 80, 40, 0.16);
+    --shadow-primary: 0 0 16px var(--color-primary-glow);
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 400ms ease;
+}
+
+
+/* ---------- Reset & Box Model ---------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ---------- Root & Body ---------- */
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    background-image:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(124, 181, 24, 0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 85% 85%, rgba(168, 212, 74, 0.05) 0%, transparent 60%);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- Typography ---------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+}
+
+h1 {
+    font-size: var(--font-size-3xl);
+}
+
+h2 {
+    font-size: var(--font-size-2xl);
+}
+
+h3 {
+    font-size: var(--font-size-xl);
+}
+
+h4 {
+    font-size: var(--font-size-lg);
+}
+
+p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast), opacity var(--transition-fast);
+}
+
+a:hover {
+    color: var(--color-primary-dark);
+    opacity: 0.85;
+}
+
+/* ---------- Layout ---------- */
+.container {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-6);
+}
+
+/* ---------- Header Row ---------- */
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.header-row h1 {
+    color: var(--color-text);
+}
+
+
+/* ---------- Done Link ---------- */
+.done-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-4);
+    transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.done-link:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-glow);
+    box-shadow: var(--shadow-primary);
+}
+
+
+/* ---------- Table ---------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+thead {
+    background-color: var(--color-surface-alt);
+    border-bottom: 1px solid var(--color-border);
+}
+
+thead tr th {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    text-align: left;
+}
+
+thead tr th.id-cell {
+    width: 60px;
+    text-align: center;
+}
+
+tbody tr {
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color var(--transition-fast);
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody tr td,
+tbody tr th {
+    padding: var(--space-4);
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    color: var(--color-text);
+    text-align: left;
+    vertical-align: middle;
+}
+
+/* ---------- Buttons (汎用) ---------- */
+button,
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    font-family: var(--font-family);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+button:active,
+.btn:active {
+    transform: scale(0.97);
+}
+
+/* Outlined variant */
+.btn-outline {
+    color: var(--color-text-muted);
+    background: transparent;
+    border-color: var(--color-border);
+}
+
+.btn-outline:hover {
+    color: var(--color-text);
+    border-color: var(--color-text-muted);
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* Success variant */
+.btn-success {
+    color: var(--color-success);
+    background: rgba(90, 170, 90, 0.10);
+    border-color: rgba(90, 170, 90, 0.30);
+}
+
+.btn-success:hover {
+    background: rgba(90, 170, 90, 0.18);
+    box-shadow: 0 0 10px rgba(90, 170, 90, 0.15);
+}
+
+/* Danger variant */
+.btn-danger {
+    color: var(--color-danger);
+    background: rgba(192, 80, 74, 0.08);
+    border-color: rgba(192, 80, 74, 0.25);
+}
+
+.btn-danger:hover {
+    background: rgba(192, 80, 74, 0.15);
+}
+
+/* ---------- Scrollbar (Webkit) ---------- */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-dim);
+}
+
+/* ---------- Utility Classes ---------- */
+.text-muted {
+    color: var(--color-text-muted);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-sm {
+    font-size: var(--font-size-sm);
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp var(--transition-slow) both;
+}
