@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { fromTask } from '../composables/fromTask'
+// fromTask Composable から入力値(newTask)と送信処理(addTask)を取得
+import { fromTask } from '../composables/useTask'
 
 const { newTask, addTask } = fromTask()
 </script>
 
 <template>
+    <!-- @submit.prevent でページリロードを防ぎ、addTask を呼び出す -->
     <form @submit.prevent="addTask" class="form-row">
+        <!-- v-model で newTask と双方向バインディング -->
         <input 
         v-model="newTask" 
         type="text" 

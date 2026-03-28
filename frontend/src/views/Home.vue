@@ -1,5 +1,8 @@
 <script setup lang="ts">
+// タスク追加フォームコンポーネント
 import FromTask from '../components/FromTask.vue'
+// タスク一覧テーブルコンポーネント
+import TaskTable from '../components/TaskTable.vue'
 </script>
 
 <template>
@@ -11,24 +14,7 @@ import FromTask from '../components/FromTask.vue'
     </div>
 
     <FromTask />
-    
-    <table>
-        <thead>
-            <tr>
-                <th class="id-cell">ID</th>
-                <th>タスク</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>1</th>
-                <th>選択</th>
-                <th>編集</th>
-                <th>完了</th>
-            </tr>
-        </tbody>
-    </table>
+
+    <TaskTable />
 </div>
 </template>
