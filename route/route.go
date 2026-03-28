@@ -34,12 +34,27 @@ func doneList(w http.ResponseWriter, _ *http.Request) {
 
 // タスクの追加
 func addTask(w http.ResponseWriter, r *http.Request) {
-	t := r.URL.Query().Get("task")
+	var request struct {
+		Task string
+	}
 
-	TodoList = append(TodoList, Todo{ID: nextID, Task: t, IsDone: false})
+	t, err := io.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "読み取り失敗", http.StatusInternalServerError)
+		return
+	}
+	defer r.Body.Close()
+
+	fmt.Println(string(t))
+
+	json.Unmarshal(t, &request)
+
+	TodoList = append(TodoList, Todo{ID: nextID, Task: request.Task, IsDone: false})
 	nextID++
 
-	homeHTML.Execute(w, TodoList)
+	fmt.Println(TodoList)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"message": "success"}`))
 }
 
 // タスクの完了
