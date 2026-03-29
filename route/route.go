@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"io"
 	"net/http"
 	"strconv"
 )
@@ -87,24 +86,19 @@ func deteleTask(w http.ResponseWriter, r *http.Request) {
 	doneListHTML.Execute(w, TodoList)
 }
 
-// タスクの編集
+// タスクの更新
 func updateTask(w http.ResponseWriter, r *http.Request) {
-	var newTask Todo
+	var request Todo
 
-	body, err := io.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, "読み取り失敗", http.StatusInternalServerError)
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, "読み取り失敗", http.StatusBadRequest)
 		return
 	}
 	defer r.Body.Close()
 
-	fmt.Printf("受信データ: %s\n", string(body))
-
-	json.Unmarshal(body, &newTask)
-
 	for i, t := range TodoList {
-		if t.ID == newTask.ID {
-			TodoList[i].Task = newTask.Task
+		if t.ID == request.ID {
+			TodoList[i].Task = request.Task
 		}
 	}
 
