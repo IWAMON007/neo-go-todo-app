@@ -22,6 +22,37 @@ export function getTodoList() {
     return todoList
 }
 
+export function useDoneTask() {
+    async function doneTask(taskID: number) {
+        try {
+            const response = await fetch(`/task/done`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ID: taskID, Task: editingText.value }),
+            })
+
+            if (!response.ok) {
+                throw new Error('サーバーエラーが発生しました')
+            }
+
+            // 成功確認できればサーバーレスポンスを待たずにフロント側で直接更新
+            const index = todoList.value.findIndex(t => t.ID === taskID)
+            if (index !== -1) {
+                todoList.value[index].IsDone = true
+                console.log(todoList.value[index])
+            }
+
+        } catch (error: any) {
+            console.error('更新に失敗しました:', error.message)
+            alert('タスクの更新に失敗しました。通信状況を確認してください。')
+        }
+    }
+
+    return { doneTask }
+}
+
 // 編集状態を管理するComposable（EditButton / SaveButton / CancelButton / TaskTable 間で共有）
 export function useEditTask() {
     function editTask(taskID: number) {

@@ -50,7 +50,6 @@ func addTask(w http.ResponseWriter, r *http.Request) {
 	TodoList = append(TodoList, newTodo)
 	nextID++
 
-	fmt.Println(TodoList)
 	w.Header().Set("Content-Type", "application/json")
 
 	json.NewEncoder(w).Encode(newTodo)
@@ -58,18 +57,24 @@ func addTask(w http.ResponseWriter, r *http.Request) {
 
 // タスクの完了
 func doneTask(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Query().Get("id")
-	taskId, _ := strconv.Atoi(id)
+	var request Todo
+
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, "読み取り失敗", http.StatusBadRequest)
+		return
+	}
+	defer r.Body.Close()
+
+	fmt.Printf("[タスク完了リクエスト] 完了タスク：ID = %d\n", request.ID)
 
 	for i, t := range TodoList {
-		if t.ID == taskId {
+		if t.ID == request.ID {
 			TodoList[i].IsDone = true
 		}
 	}
 
-	fmt.Println(TodoList)
-
-	homeHTML.Execute(w, TodoList)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"message": "success"}`))
 }
 
 // タスクの削除

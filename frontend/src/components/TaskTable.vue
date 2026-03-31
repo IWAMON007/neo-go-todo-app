@@ -4,6 +4,7 @@ import { getTodoList, useEditTask } from '../composables/useTask'
 import EditButton from './EditButton.vue'
 import SaveButton from './SaveButton.vue'
 import CanselButton from './CanselButton.vue'
+import DoneButton from './DoneButton.vue'
 
 const todoList = getTodoList()
 
@@ -45,7 +46,9 @@ const { editingId, editingText } = useEditTask()
                         <CanselButton />
                     </div>
                 </th>
-                <th class="done-cell">完了</th>
+                <th class="done-cell">
+                    <DoneButton :taskId="todo.ID" />
+                </th>
             </tr>
         </tbody>
     </table>
