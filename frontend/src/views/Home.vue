@@ -1,8 +1,16 @@
 <script setup lang="ts">
-// タスク追加フォームコンポーネント
+import { onMounted } from 'vue';
+import { useGetTodoList } from '../composables/useTask';
 import FromTask from '../components/FromTask.vue'
-// タスク一覧テーブルコンポーネント
 import TaskTable from '../components/TaskTable.vue'
+
+// getTodoList も一緒に受け取る
+const { todoList, getTodoList } = useGetTodoList()
+
+// マウント時にデータを取得する処理を実行
+onMounted(() => {
+    getTodoList()
+})
 </script>
 
 <template>
@@ -15,6 +23,6 @@ import TaskTable from '../components/TaskTable.vue'
 
     <FromTask />
 
-    <TaskTable />
+    <TaskTable :todoList="todoList"/>
 </div>
 </template>

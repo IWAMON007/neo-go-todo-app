@@ -23,8 +23,9 @@ var homeHTML = template.Must(template.ParseFiles("views/home.html"))
 var doneListHTML = template.Must(template.ParseFiles("views/done_list.html"))
 
 // 初期表示時
-func home(w http.ResponseWriter, _ *http.Request) {
-	homeHTML.Execute(w, TodoList)
+func getTodoList(w http.ResponseWriter, _ *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(TodoList)
 }
 
 func doneList(w http.ResponseWriter, _ *http.Request) {
@@ -51,7 +52,6 @@ func addTask(w http.ResponseWriter, r *http.Request) {
 	nextID++
 
 	w.Header().Set("Content-Type", "application/json")
-
 	json.NewEncoder(w).Encode(newTodo)
 }
 
@@ -114,7 +114,7 @@ func updateTask(w http.ResponseWriter, r *http.Request) {
 // ルーティング設定
 func SetRoute() {
 	route := map[string]func(w http.ResponseWriter, r *http.Request){
-		"/":            home,
+		"/todo/list":   getTodoList,
 		"/done/list":   doneList,
 		"/task":        addTask,
 		"/task/delete": deteleTask,

@@ -1,12 +1,15 @@
 <script setup lang="ts">
 // getTodoList でモジュールスコープのtodoListを参照（全コンポーネント共通の状態）
-import { getTodoList, useEditTask } from '../composables/useTask'
+import { useEditTask } from '../composables/useTask'
+import type { Todo } from '../types/todo'
 import EditButton from './EditButton.vue'
 import SaveButton from './SaveButton.vue'
 import CanselButton from './CanselButton.vue'
 import DoneButton from './DoneButton.vue'
 
-const todoList = getTodoList()
+const props = defineProps<{
+    todoList: Todo[]
+}>()
 
 // 編集状態管理
 const { editingId, editingText } = useEditTask()
