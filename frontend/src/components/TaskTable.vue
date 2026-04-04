@@ -4,7 +4,7 @@ import { useEditTask } from '../composables/useTask'
 import type { Todo } from '../types/todo'
 import EditButton from './EditButton.vue'
 import SaveButton from './SaveButton.vue'
-import CanselButton from './CanselButton.vue'
+import CanselButton from './CancelButton.vue'
 import DoneButton from './DoneButton.vue'
 
 const props = defineProps<{

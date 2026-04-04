@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useGetTodoList } from '../composables/useTask';
-import FromTask from '../components/FromTask.vue'
+import FromTask from '../components/FormTask.vue'
 import TaskTable from '../components/TaskTable.vue'
 
 // getTodoList も一緒に受け取る
