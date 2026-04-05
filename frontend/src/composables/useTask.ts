@@ -27,7 +27,11 @@ export function useGetTodoList() {
                 throw new Error('サーバーエラーが発生しました')
             }
 
-            todoList.value = await response.json()
+            const list: Todo[] = await response.json()
+
+            if (list !== null) {
+                todoList.value = list
+            }
 
         } catch (error: any) {
             console.error('追加に失敗しました:', error.message)
@@ -52,7 +56,11 @@ export function useGetDoneList() {
                 throw new Error('サーバーエラーが発生しました')
             }
 
-            doneList.value = await response.json()
+            const list: Todo[] = await response.json()
+            
+            if (list !== null) {
+                doneList.value = list
+            }
 
         } catch (error: any) {
             console.error('追加に失敗しました:', error.message)
@@ -71,7 +79,7 @@ export function useDoneTask() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ ID: taskID, Task: editingText.value }),
+                body: JSON.stringify({ ID: taskID }),
             })
 
             if (!response.ok) {
@@ -82,7 +90,6 @@ export function useDoneTask() {
             const index = todoList.value.findIndex(t => t.ID === taskID)
             if (index !== -1) {
                 todoList.value[index].IsDone = true
-                console.log(todoList.value[index])
             }
 
         } catch (error: any) {
