@@ -2,7 +2,6 @@ package route
 
 import (
 	"encoding/json"
-	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -45,8 +44,6 @@ func doneList(w http.ResponseWriter, _ *http.Request) {
 func addTask(w http.ResponseWriter, r *http.Request) {
 	var request struct{ Task string }
 
-	fmt.Println("タスク追加")
-
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		http.Error(w, "読み取り失敗", http.StatusBadRequest)
 		return
@@ -75,8 +72,6 @@ func doneTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer r.Body.Close()
-
-	fmt.Printf("[タスク完了リクエスト] 完了タスク：ID = %d\n", request.ID)
 
 	for i, t := range TodoList {
 		if t.ID == request.ID {
@@ -123,7 +118,9 @@ func updateTask(w http.ResponseWriter, r *http.Request) {
 }
 
 // ルーティング設定
-func SetRoute() {
+func SetRoute() http.Handler {
+	mux := http.NewServeMux()
+
 	route := map[string]func(w http.ResponseWriter, r *http.Request){
 		"/todo/list":   getTodoList,
 		"/done/list":   doneList,
@@ -134,6 +131,8 @@ func SetRoute() {
 	}
 
 	for r, h := range route {
-		http.HandleFunc(r, h)
+		mux.HandleFunc(r, h)
 	}
+
+	return mux
 }
