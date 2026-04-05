@@ -5,7 +5,6 @@ import type { Todo } from '../types/todo'
 
 // モジュールスコープで定義することで、全コンポーネント間で状態を共有する
 const todoList = ref<Todo[]>([])
-const doneList = ref<Todo[]>([])
 
 // 編集中のタスクID（null = 非編集状態）
 const editingId = ref<number | null>(null)
@@ -40,35 +39,6 @@ export function useGetTodoList() {
     }
 
     return { todoList, getTodoList }
-}
-
-export function useGetDoneList() {
-    async function getDoneList() {
-        try {
-            const response = await fetch('/done/list', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-
-            if (!response.ok) {
-                throw new Error('サーバーエラーが発生しました')
-            }
-
-            const list: Todo[] = await response.json()
-            
-            if (list !== null) {
-                doneList.value = list
-            }
-
-        } catch (error: any) {
-            console.error('追加に失敗しました:', error.message)
-            alert('タスクの追加に失敗しました。通信状況を確認してください。')
-        }
-    }
-
-    return { doneList, getDoneList }
 }
 
 export function useDoneTask() {
