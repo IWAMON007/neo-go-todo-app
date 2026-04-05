@@ -22,19 +22,30 @@ var nextID int = 1
 var homeHTML = template.Must(template.ParseFiles("views/home.html"))
 var doneListHTML = template.Must(template.ParseFiles("views/done_list.html"))
 
-// 初期表示時
+// タスクの一覧を取得
 func getTodoList(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(TodoList)
 }
 
 func doneList(w http.ResponseWriter, _ *http.Request) {
-	doneListHTML.Execute(w, TodoList)
+	var DoneList []Todo
+
+	for i, t := range TodoList {
+		if t.IsDone {
+			DoneList = append(DoneList, TodoList[i])
+		}
+	}
+	w.Header().Set("Content-Type", "application/json")
+
+	json.NewEncoder(w).Encode(DoneList)
 }
 
 // タスクの追加
 func addTask(w http.ResponseWriter, r *http.Request) {
 	var request struct{ Task string }
+
+	fmt.Println("タスク追加")
 
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		http.Error(w, "読み取り失敗", http.StatusBadRequest)

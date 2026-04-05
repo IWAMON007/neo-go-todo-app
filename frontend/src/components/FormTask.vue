@@ -1,8 +1,8 @@
 <script setup lang="ts">
-// fromTask Composable から入力値(newTask)と送信処理(addTask)を取得
-import { fromTask } from '../composables/useTask'
+// useAddTask Composable から入力値(newTask)と送信処理(addTask)を取得
+import { useAddTask } from '../composables/useTask'
 
-const { newTask, addTask } = fromTask()
+const { newTask, addTask } = useAddTask()
 </script>
 
 <template>

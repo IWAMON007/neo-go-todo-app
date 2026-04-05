@@ -8,7 +8,8 @@ import CanselButton from './CancelButton.vue'
 import DoneButton from './DoneButton.vue'
 
 const props = defineProps<{
-    todoList: Todo[]
+    todoList: Todo[];
+    pathName?: string | symbol | null;
 }>()
 
 // 編集状態管理
@@ -26,33 +27,50 @@ const { editingId, editingText } = useEditTask()
         </thead>
         <tbody>
             <!-- v-for でtodoListを順に描画。todoList更新時に自動で再レンダリングされる -->
-            <tr v-for="todo in todoList" :key="todo.ID">
-                <th class="task-cell">
-                    <!-- 編集中の行だけ input を表示、それ以外はテキスト -->
-                    <input
-                        v-if="editingId === todo.ID"
-                        v-model="editingText"
-                        type="text"
-                        class="task-input"
-                        autofocus
-                    />
-                    <span v-else>{{ todo.Task }}</span>
-                </th>
-                <th v-if="editingId !== todo.ID" class="edit-cell">
-                    <div class="cell-inner">
-                        <EditButton :taskId="todo.ID" />
-                    </div>
-                </th>
-                <th v-else class="edit-cell">
-                    <div class="cell-inner">
-                        <SaveButton :taskId="todo.ID" />
-                        <CanselButton />
-                    </div>
-                </th>
-                <th class="done-cell">
-                    <DoneButton :taskId="todo.ID" />
-                </th>
-            </tr>
+            <template v-for="todo in todoList" :key="todo.ID">
+                <tr v-if="pathName === 'Home' && !todo.IsDone">
+                    <td class="task-cell">
+                        <!-- 編集中の行だけ input を表示、それ以外はテキスト -->
+                        <input
+                            v-if="editingId === todo.ID"
+                            v-model="editingText"
+                            type="text"
+                            class="task-input"
+                            autofocus
+                        />
+
+                        <!-- 通常時はタスクを表示 -->
+                        <span v-else>{{ todo.Task }}</span>
+                    </td>
+
+                    <!-- 編集ボタン -->
+                    <td v-if="editingId !== todo.ID" class="edit-cell">
+                        <div class="cell-inner">
+                            <EditButton :taskId="todo.ID" />
+                        </div>
+                    </td>
+
+                    <!-- 編集中の保存とキャンセルボタン -->
+                    <td v-else class="edit-cell">
+                        <div class="cell-inner">
+                            <SaveButton :taskId="todo.ID" />
+                            <CanselButton />
+                        </div>
+                    </td>
+
+                    <!-- タスク完了ボタン -->
+                    <td class="done-cell">
+                        <DoneButton :taskId="todo.ID" />
+                    </td>
+                </tr>
+
+                <!-- 完了タスク表示時 -->
+                <tr v-if="pathName === 'Done' && todo.IsDone">
+                    <td>{{ todo.Task }}</td>
+                    <td></td>
+                    <td>削除</td>
+                </tr>
+            </template>
         </tbody>
     </table>
 </template>
