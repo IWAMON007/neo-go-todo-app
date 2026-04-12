@@ -9,15 +9,15 @@ export default defineConfig({
     proxy: {
       // /task, /done など Go のエンドポイントをすべて転送
       '/task': {
-        target: 'http://localhost:8080',
+        target: 'http://go-app:8080',
         changeOrigin: true,
       },
       '/done': {
-        target: 'http://localhost:8080',
+        target: 'http://go-app:8080',
         changeOrigin: true,
       },
       '/todo': {
-        target: 'http://localhost:8080',
+        target: 'http://go-app:8080',
         changeOrigin: true,
       },
     },

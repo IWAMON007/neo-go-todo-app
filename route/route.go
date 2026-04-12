@@ -2,7 +2,6 @@ package route
 
 import (
 	"encoding/json"
-	"html/template"
 	"net/http"
 )
 
@@ -14,11 +13,6 @@ type Todo struct {
 
 var TodoList []Todo
 var nextID int = 1
-
-// htmlを事前にパース
-// hmtlにエラーがあれば、ここで止まる
-var homeHTML = template.Must(template.ParseFiles("views/home.html"))
-var doneListHTML = template.Must(template.ParseFiles("views/done_list.html"))
 
 // タスクの一覧を取得
 func getTodoList(w http.ResponseWriter, _ *http.Request) {

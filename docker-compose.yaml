@@ -1,5 +1,5 @@
 services:
-  app:
+  go-app:
     build: .
     ports:
       - "8080:8080" # ローカルの8080番で、コンテナ内の8080番にアクセス
@@ -11,3 +11,16 @@ services:
         target: /app/bin # 実行ファイルはコンテナのものを使う
     environment:
       - APP_ENV=development
+  
+  vue-app:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /frontend
+      - type: volume
+        target: /frontend/node_modules
+    environment:
+      - NODE_ENV=development
