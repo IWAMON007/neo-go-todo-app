@@ -158,3 +158,32 @@ export function useAddTask() {
 
     return { newTask, addTask }
 }
+
+// タスク削除
+export function useDeleteTask() {
+    // タスクをサーバーへPOSTし、成功時にtodoListへ追加する
+    async function deleteTask(taskID: number): Promise<void> {
+        try {
+            const response = await fetch('/task/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ID: taskID }),
+            })
+
+            if (!response.ok) {
+                throw new Error('サーバーエラーが発生しました')
+            }
+
+            // レスポンスをTodo型としてパース（awaitが必要）
+            todoList.value = todoList.value.filter(todo => todo.ID !== taskID);
+
+        } catch (error: any) {
+            console.error('追加に失敗しました:', error.message)
+            alert('タスクの追加に失敗しました。通信状況を確認してください。')
+        }
+    }
+
+    return { deleteTask }
+}

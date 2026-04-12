@@ -6,6 +6,7 @@ import EditButton from './EditButton.vue'
 import SaveButton from './SaveButton.vue'
 import CanselButton from './CancelButton.vue'
 import DoneButton from './DoneButton.vue'
+import DeleteButton from './DeleteButton.vue'
 
 const props = defineProps<{
     todoList: Todo[];
@@ -68,7 +69,9 @@ const { editingId, editingText } = useEditTask()
                 <tr v-if="pathName === 'Done' && todo.IsDone">
                     <td>{{ todo.Task }}</td>
                     <td></td>
-                    <td>削除</td>
+                    <td>
+                        <DeleteButton :taskId="todo.ID" />
+                    </td>
                 </tr>
             </template>
         </tbody>

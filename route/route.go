@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"html/template"
 	"net/http"
-	"strconv"
 )
 
 type Todo struct {
@@ -85,16 +84,22 @@ func doneTask(w http.ResponseWriter, r *http.Request) {
 
 // タスクの削除
 func deteleTask(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Query().Get("id")
-	taskId, _ := strconv.Atoi(id)
+	var request struct{ ID int }
+
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, "読み取り失敗", http.StatusBadRequest)
+		return
+	}
 
 	for i, t := range TodoList {
-		if t.ID == taskId {
+		if t.ID == request.ID {
 			TodoList = append(TodoList[:i], TodoList[i+1:]...)
+			break
 		}
 	}
 
-	doneListHTML.Execute(w, TodoList)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"message": "success"}`))
 }
 
 // タスクの更新
