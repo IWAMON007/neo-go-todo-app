@@ -1,0 +1,11 @@
+FROM node:24.14-alpine AS dev
+
+WORKDIR /frontend
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+CMD ["npm", "run", "dev", "--", "--host"]
