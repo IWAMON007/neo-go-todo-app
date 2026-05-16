@@ -2,9 +2,7 @@
 
 ## 進行中
 
-### ブランチ: `docs/task-tracking-setup`
-- [ ] `docs/TASKS.md` の作成・タスク整理
-- [ ] `CLAUDE.md` へのタスク管理・メンタリング方針の追記
+<!-- 現在取り組んでいるタスクをここに書く -->
 
 ## やりたいこと（未着手）
 
@@ -69,4 +67,9 @@
 
 ## 完了
 
-<!-- 完了したタスクをここに移す -->
+### ブランチ: `docs/task-tracking-setup`
+- [x] `docs/TASKS.md` の作成・タスク整理
+- [x] `CLAUDE.md` へのタスク管理・メンタリング方針の追記
+- [x] `docs/learning/` ディレクトリ構成の構築（daily / inbox / knowledge-vault）
+- [x] `docs/learning/CLAUDE.md` の作成（学習ログ運用ルール）
+- [x] daily テンプレート・初回 daily の作成
