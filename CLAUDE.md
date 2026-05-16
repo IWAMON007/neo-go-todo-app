@@ -2,6 +2,26 @@
 
 ## Claudeへの作業指示
 
+### タスク管理
+- **作業前に必ず [`docs/TASKS.md`](docs/TASKS.md) を確認すること** — 現在進行中・次にやることを把握してから作業に入る
+- ユーザーがやりたいことをラフに伝えたら、Claude がタスク形式に整理して `docs/TASKS.md` に反映する
+
+### 開発スタンス（重要）
+このプロジェクトはユーザーのスキルアップが目的。**Claude が全部作るのではなく、ユーザーが自分で実装することを支援する。**
+
+- **課題を出す** — タスクに取り組む前に「何を調べるべきか」「どう設計するか」をユーザーに考えさせる
+- **ヒントを出す** — 詰まったときはコード全体を渡すのではなく、考え方・キーワード・参考になる概念を示す
+- **コードレビューをする** — ユーザーが書いたコードを確認して、改善点や別のアプローチを提案する
+- **全部書くのは最終手段** — ユーザーが「書いて」と明示した場合や、学習目的で完成形を見たい場合のみ
+
+### 学習ログの記録
+詳細なルールは [`docs/learning/CLAUDE.md`](docs/learning/CLAUDE.md) に記載。
+
+- **会話中に重要なやりとりが発生したら都度** `docs/learning/daily/YYYY-MM-DD.md` に追記する
+- 日付をまたいだ場合は新しいファイルを作成する
+- タスク完了時はレビューをまとめて daily の「タスクレビュー」セクションに追記する
+- 「トピックに整理して」と指示があったら daily を読んで `knowledge-vault/` 以下に整理し、使用済み daily は `inbox/` に移動する
+
 ### ブランチ運用
 - **worktree は自動作成しない** — 勝手に `.claude/worktrees/` 以下に worktree を作らないこと
 - **main ブランチで作業しない** — 現在のブランチが `main` の場合、作業前に必ずブランチ作成を提案すること
@@ -51,6 +71,9 @@ Go_webapp/
 ├── route/route.go                   # 全APIルーティング・ハンドラー・Todo型定義
 ├── dockerfile                       # Go開発用（Air込み）
 ├── docker-compose.yaml
+├── docs/                            # プロジェクトドキュメント
+│   ├── TASKS.md                     # タスク一覧・進捗管理
+│   └── learning/                    # 学習ログ（daily / inbox / knowledge-vault）
 └── frontend/
     ├── vite.config.ts               # APIプロキシ設定（/task, /done, /todo → :8080）
     ├── src/
@@ -63,13 +86,13 @@ Go_webapp/
     │   │   ├── Home.vue             # 未完了タスク一覧
     │   │   └── Done.vue             # 完了タスク一覧
     │   └── components/
-    │       ├── FormTask.vue         # タスク追加フォーム
-    │       ├── TaskTable.vue        # タスク一覧テーブル（Home/Done共用）
-    │       ├── EditButton.vue
-    │       ├── SaveButton.vue
-    │       ├── CancelButton.vue
-    │       ├── DoneButton.vue
-    │       └── DeleteButton.vue
+    │       ├── FormTask.vue         # タスク追加フォーム（テキスト入力・送信）
+    │       ├── TaskTable.vue        # タスク一覧テーブル（Home/Done共用・編集状態の表示切替）
+    │       ├── EditButton.vue       # 編集モードを開始するボタン
+    │       ├── SaveButton.vue       # 編集内容を保存するボタン
+    │       ├── CancelButton.vue     # 編集をキャンセルするボタン
+    │       ├── DoneButton.vue       # タスクを完了済みにするボタン
+    │       └── DeleteButton.vue     # タスクを削除するボタン
     └── dockerfile
 ```
 
