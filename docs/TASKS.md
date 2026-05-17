@@ -2,7 +2,11 @@
 
 ## 進行中
 
-<!-- 現在取り組んでいるタスクをここに書く -->
+### 1-1. API通信の共通化（useTask.ts）
+- [x] `apiFetch` ヘルパー関数の作成（useFetch.ts）
+- [x] `getTodoList` を `apiFetch` に置き換え
+- [ ] `Params` 型に `body` を追加（POST/PUT/DELETE 対応）
+- [ ] `useDoneTask` / `useUpdateTask` / `useAddTask` / `useDeleteTask` を `apiFetch` に置き換え
 
 ## やりたいこと（未着手）
 

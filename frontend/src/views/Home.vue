@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router'
-import { useGetTodoList } from '../composables/useTask';
+import { todoList, getTodoList } from '../composables/useTask';
 import FromTask from '../components/FormTask.vue'
 import TaskTable from '../components/TaskTable.vue'
-
-// getTodoList も一緒に受け取る
-const { todoList, getTodoList } = useGetTodoList()
 
 const route = useRoute()
 

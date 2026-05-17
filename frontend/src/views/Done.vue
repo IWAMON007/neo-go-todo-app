@@ -1,11 +1,13 @@
 <script setup lang="ts">
-// import { watch } from 'vue';
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { useGetTodoList } from '../composables/useTask';
 import TaskTable from '../components/TaskTable.vue'
+import { getTodoList } from '../composables/useTask';
+import type { Todo } from '../types/todo'
 
 const route = useRoute()
-const { todoList } = useGetTodoList()
+getTodoList()
+const todoList = ref<Todo[]>([])
 
 // watch(
 //     () => route.fullPath, 

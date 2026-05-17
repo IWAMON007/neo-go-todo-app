@@ -2,47 +2,32 @@
 // タスクの状態管理・API通信を行うComposable（複数コンポーネントで共有する）
 import { ref } from 'vue'
 import type { Todo } from '../types/todo'
+import { apiFetch } from './useFetch'
 
 // モジュールスコープで定義することで、全コンポーネント間で状態を共有する
-const todoList = ref<Todo[]>([])
+export const todoList = ref<Todo[]>([])
 
 // 編集中のタスクID（null = 非編集状態）
-const editingId = ref<number | null>(null)
+export const editingId = ref<number | null>(null)
 // 編集中のテキスト
-const editingText = ref<string>('')
+export const editingText = ref<string>('')
 
-// todoListをコンポーネントから参照するためのゲッター
-export function useGetTodoList() {
-    async function getTodoList() {
-        try {
-            const response = await fetch('/todo/list', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-
-            if (!response.ok) {
-                throw new Error('サーバーエラーが発生しました')
-            }
-
-            const list: Todo[] = await response.json()
-
-            if (list !== null) {
-                todoList.value = list
-            }
-
-        } catch (error: any) {
-            console.error('追加に失敗しました:', error.message)
-            alert('タスクの追加に失敗しました。通信状況を確認してください。')
+// todoListの取得
+export async function getTodoList(): Promise<void> {
+    const list = await apiFetch<Todo[]>({
+        'route' : '/todo/list',
+        'method' : 'GET',
+        'error' : {
+            'message' : '取得に失敗しました',
+            'alert' : 'タスクの取得に失敗しました。通信状況を確認してください。'
         }
-    }
-
-    return { todoList, getTodoList }
+    })
+    
+    if (list) todoList.value = list
 }
 
 export function useDoneTask() {
-    async function doneTask(taskID: number) {
+    async function doneTask(taskID: number): Promise<void> {
         try {
             const response = await fetch(`/task/done`, {
                 method: 'PUT',
