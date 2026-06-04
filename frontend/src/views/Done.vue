@@ -1,29 +1,23 @@
 <script setup lang="ts">
-// import { watch } from 'vue';
-import { useRoute } from 'vue-router'
-import { useGetTodoList } from '../composables/useTask';
-import TaskTable from '../components/TaskTable.vue'
+import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import TaskTable from '../components/TaskTable.vue';
+import { todoList, getTodoList } from '../composables/useTask';
 
-const route = useRoute()
-const { todoList } = useGetTodoList()
+const route = useRoute();
 
-// watch(
-//     () => route.fullPath, 
-//     () => {
-//         getDoneList()
-//     }
-// )
-
+onMounted(async () => {
+    await getTodoList();
+});
 </script>
 
 <template>
-<div class="container">
+    <div class="container">
+        <div class="header-row">
+            <h1>完了したタスク</h1>
+            <router-link to="/">戻る</router-link>
+        </div>
 
-    <div class="header-row">
-        <h1>完了したタスク</h1>
-        <router-link to="/">戻る</router-link>
+        <TaskTable :todoList="todoList" :pathName="route.name" />
     </div>
-
-    <TaskTable :todoList="todoList" :pathName="route.name"/>
-</div>
 </template>

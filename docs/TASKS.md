@@ -8,10 +8,7 @@
 
 ### 1. フロントエンドリファクタリング
 
-#### 1-1. API通信の共通化（useTask.ts）
-- [ ] `fetch` + `headers` + `try/catch` + `alert` のパターンが全関数で重複している
-- [ ] 共通の `apiFetch` ヘルパー関数を作り、各composableから呼び出す形に整理する
-- **学べること**: 関数の抽象化・DRY原則・TypeScriptのジェネリクス（`<T>` を使った型安全な共通fetch）
+#### ~~1-1. API通信の共通化（useTask.ts）~~ → 完了（`refactor/api-fetch-helper`）
 
 #### 1-2. ボタンコンポーネントのスタイル共通化
 - [ ] `EditButton` / `SaveButton` / `DoneButton` / `DeleteButton` それぞれに `.icon-btn` スタイルが重複している
@@ -40,6 +37,13 @@
 - [ ] 各操作のエラーメッセージを操作内容に合わせて統一する
 - **学べること**: コードレビューの視点・バグを見つける力
 
+#### 1-7. エラーハンドリングのリファクタ
+- [ ] `useFetch.ts` の `if (!error)` dead code を `instanceof TypeError` による分岐に修正
+- [ ] ネットワークエラーとサーバーエラーを区別してメッセージを出し分ける
+- [ ] `alert` ではなく UI 上にエラーメッセージを表示する（`ref` で管理）
+- [ ] エラーメッセージの表示・非表示のライフサイクルを設計する（成功時に消す・手動で閉じるなど）
+- **学べること**: エラーの種類の分類・TypeScript の型ガード・Vue の UI 状態管理
+
 ---
 
 ### 2. バックエンドリファクタリング
@@ -66,6 +70,14 @@
 - Claude にテストを書いてもらい、それが通る実装にする方針
 
 ## 完了
+
+### ブランチ: `refactor/api-fetch-helper`
+- [x] `useFetch.ts` を新規作成し、ジェネリクスを用いた `apiFetch<T>` を実装
+- [x] `Params` 型に省略可能な `body?: object` を追加
+- [x] 全 API 関数（getTodoList / addTask / doneTask / updateTask / deleteTask）を `apiFetch` に置き換え
+- [x] `fetch` + `try/catch` + `alert` の重複パターンを排除
+- [x] `todoList` / `editingId` / `editingText` を直接 `export` する形に整理
+- [x] `onErrorCaptured` による Vue のエラーハンドリング導入
 
 ### ブランチ: `docs/task-tracking-setup`
 - [x] `docs/TASKS.md` の作成・タスク整理

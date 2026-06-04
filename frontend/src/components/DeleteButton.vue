@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { useDeleteTask } from '../composables/useTask'
-import { Trash2 } from 'lucide-vue-next'
+import { deleteTask } from '../composables/useTask';
+import { Trash2 } from 'lucide-vue-next';
 
 const props = defineProps<{
-    taskId: number
-}>()
-
-const { deleteTask } = useDeleteTask()
+    taskId: number;
+}>();
 </script>
 
 <template>
