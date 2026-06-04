@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { useDoneTask } from '../composables/useTask'
-import { CircleCheck } from 'lucide-vue-next'
+import { CircleCheck } from 'lucide-vue-next';
+import { doneTask } from '../composables/useTask';
 
 const props = defineProps<{
-    taskId: number
-}>()
-
-const { doneTask } = useDoneTask()
+    taskId: number;
+}>();
 </script>
 
 <template>
@@ -26,8 +24,8 @@ const { doneTask } = useDoneTask()
     border-radius: var(--radius-full);
     color: var(--color-success);
     cursor: pointer;
-    transition: 
-        scale var(--transition-slow), 
+    transition:
+        scale var(--transition-slow),
         color var(--transition-slow),
         background-color var(--transition-slow);
 }

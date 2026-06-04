@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { useUpdateTask } from '../composables/useTask'
-import { Save } from 'lucide-vue-next'
+import { updateTask } from '../composables/useTask';
+import { Save } from 'lucide-vue-next';
 
 const props = defineProps<{
-    taskId: number
-}>()
-
-const { updateTask } = useUpdateTask()
+    taskId: number;
+}>();
 </script>
 
 <template>
@@ -26,7 +24,9 @@ const { updateTask } = useUpdateTask()
     border-radius: var(--radius-sm);
     color: var(--color-text-muted);
     cursor: pointer;
-    transition: background-color var(--transition-fast), color var(--transition-fast);
+    transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast);
 }
 
 .icon-btn:hover {
