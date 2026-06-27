@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { onErrorCaptured, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
 import { todoList, getTodoList } from '../composables/useTask';
 import FromTask from '../components/FormTask.vue';
 import TaskTable from '../components/TaskTable.vue';
-
-const route = useRoute();
 
 // マウント時にデータを取得する処理を実行
 onMounted(() => {
@@ -27,6 +24,6 @@ onErrorCaptured((error) => {
 
         <FromTask />
 
-        <TaskTable :todoList="todoList" :pathName="route.name" />
+        <TaskTable :todoList="todoList" />
     </div>
 </template>

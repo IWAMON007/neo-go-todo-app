@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import TaskTable from '../components/TaskTable.vue';
 import { todoList, getTodoList } from '../composables/useTask';
-
-const route = useRoute();
+import DoneTaskTable from '../components/DoneTaskTable.vue';
 
 onMounted(async () => {
     await getTodoList();
@@ -18,6 +15,6 @@ onMounted(async () => {
             <router-link to="/">戻る</router-link>
         </div>
 
-        <TaskTable :todoList="todoList" :pathName="route.name" />
+        <DoneTaskTable :todoList="todoList" />
     </div>
 </template>
