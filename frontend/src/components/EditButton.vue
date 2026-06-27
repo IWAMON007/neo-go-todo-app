@@ -1,36 +1,24 @@
 <script setup lang="ts">
-import { useEditTask } from '../composables/useTask'
-import { Pencil } from 'lucide-vue-next'
+import { useEditTask } from '../composables/useTask';
+import ButtonIcon from './layouts/ButtonIcon.vue';
+import { Pencil } from 'lucide-vue-next';
 
 const props = defineProps<{
-    taskId: number
-}>()
+    taskId: number;
+}>();
 
-const { editTask } = useEditTask()
+const { editTask } = useEditTask();
 </script>
 
 <template>
-    <button @click="editTask(props.taskId)" class="icon-btn">
+    <ButtonIcon
+        @click="editTask(props.taskId)"
+        :transition="`
+            background-color var(--transition-fast),
+            color var(--transition-fast)
+        `"
+        hover-transform="scale(1.3)"
+    >
         <Pencil :size="20" />
-    </button>
+    </ButtonIcon>
 </template>
-
-<style scoped>
-.icon-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px;
-    background: transparent;
-    border: none;
-    border-radius: var(--radius-sm);
-    color: var(--color-text-muted);
-    cursor: pointer;
-    transition: background-color var(--transition-fast), color var(--transition-fast);
-}
-
-.icon-btn:hover {
-    color: var(--color-text);
-    transform: scale(1.3);
-}
-</style>

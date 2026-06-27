@@ -1,33 +1,19 @@
 <script setup lang="ts">
-import { useEditTask } from '../composables/useTask'
-import { X } from 'lucide-vue-next'
+import { useEditTask } from '../composables/useTask';
+import { X } from 'lucide-vue-next';
+import ButtonIcon from './layouts/ButtonIcon.vue';
 
-const { cancelEdit } = useEditTask()
+const { cancelEdit } = useEditTask();
 </script>
 
 <template>
-    <button @click="cancelEdit()" class="icon-btn">
+    <ButtonIcon
+        @click="cancelEdit()"
+        color="var(--color-danger)"
+        border="2px solid var(--color-danger)"
+        hover-background-color="var(--color-danger)"
+        hover-color="white"
+    >
         <X :size="16" :stroke-width="3" />
-    </button>
+    </ButtonIcon>
 </template>
-
-<style scoped>
-.icon-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2px;
-    background: transparent;
-    border: 2px solid var(--color-danger);
-    border-radius: var(--radius-full);
-    color:  var(--color-danger);
-    cursor: pointer;
-    transition: background-color var(--transition-fast), color var(--transition-fast);
-}
-
-.icon-btn:hover {
-    background-color: var(--color-danger);
-    color: white;
-    transform: scale(1.2);
-}
-</style>

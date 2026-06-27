@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { CircleCheck } from 'lucide-vue-next';
+import ButtonIcon from './layouts/ButtonIcon.vue';
 import { doneTask } from '../composables/useTask';
 
 const props = defineProps<{
@@ -8,31 +9,17 @@ const props = defineProps<{
 </script>
 
 <template>
-    <button @click="doneTask(props.taskId)" class="icon-btn">
+    <ButtonIcon
+        @click="doneTask(props.taskId)"
+        :transition="`
+            scale var(--transition-slow),
+            color var(--transition-slow),
+            background-color var(--transition-slow)
+            `"
+        color="var(--color-success)"
+        hover-background-color="var(--color-success)"
+        hover-color="white"
+    >
         <CircleCheck :size="30" />
-    </button>
+    </ButtonIcon>
 </template>
-
-<style scoped>
-.icon-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2px;
-    background: transparent;
-    border: none;
-    border-radius: var(--radius-full);
-    color: var(--color-success);
-    cursor: pointer;
-    transition:
-        scale var(--transition-slow),
-        color var(--transition-slow),
-        background-color var(--transition-slow);
-}
-
-.icon-btn:hover {
-    color: white;
-    scale: 1.3;
-    background-color: var(--color-success);
-}
-</style>

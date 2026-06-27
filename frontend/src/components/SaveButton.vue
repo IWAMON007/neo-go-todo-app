@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { updateTask } from '../composables/useTask';
 import { Save } from 'lucide-vue-next';
+import ButtonIcon from './layouts/ButtonIcon.vue';
 
 const props = defineProps<{
     taskId: number;
@@ -8,29 +9,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <button @click="updateTask(props.taskId)" class="icon-btn">
+    <ButtonIcon @click="updateTask(props.taskId)">
         <Save :size="24" />
-    </button>
+    </ButtonIcon>
 </template>
-
-<style scoped>
-.icon-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0px;
-    background: transparent;
-    border: none;
-    border-radius: var(--radius-sm);
-    color: var(--color-text-muted);
-    cursor: pointer;
-    transition:
-        background-color var(--transition-fast),
-        color var(--transition-fast);
-}
-
-.icon-btn:hover {
-    color: var(--color-text);
-    transform: scale(1.2);
-}
-</style>
