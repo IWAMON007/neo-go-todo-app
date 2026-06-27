@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { deleteTask } from '../composables/useTask';
 import { Trash2 } from 'lucide-vue-next';
+import ButtonIcon from './layouts/ButtonIcon.vue';
 
 const props = defineProps<{
     taskId: number;
@@ -8,47 +9,18 @@ const props = defineProps<{
 </script>
 
 <template>
-    <button @click="deleteTask(props.taskId)" class="icon-btn">
-        <Trash2 :size="26" />
-    </button>
+    <ButtonIcon
+        @click="deleteTask(props.taskId)"
+        :transition="`
+            scale var(--transition-slow),
+            color var(--transition-slow),
+            background-color var(--transition-slow)
+            `"
+        color="var(--color-danger)"
+        hover-background-color="var(--color-danger)"
+        padding="5px"
+        hover-color="white"
+    >
+        <Trash2 :size="24" />
+    </ButtonIcon>
 </template>
-
-<style scoped>
-.icon-btn {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px;
-    background: transparent;
-    border-radius: var(--radius-full);
-    color: var(--color-danger);
-    cursor: pointer;
-    overflow: hidden;
-    transition: color 0.3s ease;
-    border: none;
-}
-
-.icon-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: var(--color-danger);
-    border-radius: 50%;
-    transform: scale(0);
-    transition: transform 0.3s ease;
-}
-
-.icon-btn:hover::before {
-    transform: scale(1);
-}
-
-.icon-btn:hover {
-    color: white;
-}
-
-.icon-btn > * {
-    position: relative;
-    z-index: 1;
-}
-</style>

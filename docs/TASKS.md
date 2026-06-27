@@ -10,10 +10,7 @@
 
 #### ~~1-1. API通信の共通化（useTask.ts）~~ → 完了（`refactor/api-fetch-helper`）
 
-#### 1-2. ボタンコンポーネントのスタイル共通化
-- [ ] `EditButton` / `SaveButton` / `DoneButton` / `DeleteButton` それぞれに `.icon-btn` スタイルが重複している
-- [ ] 共通の `BaseIconButton` コンポーネントを作り、各ボタンはそれを利用する形にする
-- **学べること**: Vue のコンポーネント設計・スロット（`<slot>`）の使い方・スタイルの継承
+#### ~~1-2. ボタンコンポーネントのスタイル共通化~~ → 完了（`refactor/base-icon-button`）
 
 #### 1-3. TaskTable の責務分離
 - [ ] 現在 `pathName` prop で `'Home'` / `'Done'` を判定してレイアウトを切り替えている
@@ -70,6 +67,13 @@
 - Claude にテストを書いてもらい、それが通る実装にする方針
 
 ## 完了
+
+### ブランチ: `refactor/base-icon-button`
+- [x] `ButtonIcon.vue` を `components/layouts/` に作成（`<slot>` + CSS 変数ベースの汎用ボタン）
+- [x] CSS 変数（`--color`・`--border`・`--padding`・`--border-radius`・hover 系）を props 経由で注入する設計を採用
+- [x] 全ボタン（EditButton / SaveButton / DoneButton / DeleteButton / CancelButton）を `ButtonIcon` ベースに移行
+- [x] 各ボタンから重複していた `.icon-btn` スタイルを排除
+- [x] DeleteButton の `::before` アニメーションを廃止し、他ボタンと統一感のある hover に変更
 
 ### ブランチ: `refactor/api-fetch-helper`
 - [x] `useFetch.ts` を新規作成し、ジェネリクスを用いた `apiFetch<T>` を実装
