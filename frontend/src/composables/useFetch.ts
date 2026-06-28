@@ -18,17 +18,17 @@ export async function apiFetch<T>(params: Params): Promise<T> {
         });
 
         if (!response.ok) {
-            throw new Error('サーバーエラーが発生しました');
+            throw new Error(params.error.message);
         }
 
         const res: T = await response.json();
 
         return res;
     } catch (error: unknown) {
-        if (!error) {
-            throw new Error(params.error.message);
+        if (error instanceof Error) {
+            throw error;
         }
 
-        throw error;
+        throw new Error('予期せぬエラーが発生しました。');
     }
 }
