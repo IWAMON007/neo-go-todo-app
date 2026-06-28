@@ -18,12 +18,7 @@
 
 #### ~~1-5. 型安全性の改善~~ → 完了（`fix/done-view-onmounted` ブランチで対応）
 
-#### 1-6. 細かいバグ・コードの整理
-
-- [ ] `TaskTable.vue` に `import CanselButton`（Cansel = typo、Cancel が正しい）がある
-- [ ] `useDeleteTask` の catch ブロックのエラーメッセージが「追加に失敗しました」になっている（削除なのに）
-- [ ] 各操作のエラーメッセージを操作内容に合わせて統一する
-- **学べること**: コードレビューの視点・バグを見つける力
+#### ~~1-6. 細かいバグ・コードの整理~~ → 完了（`fix/code-cleanup`）
 
 #### 1-7. エラーハンドリングのリファクタ
 
@@ -67,6 +62,11 @@
 - Claude にテストを書いてもらい、それが通る実装にする方針
 
 ## 完了
+
+### ブランチ: `fix/code-cleanup`
+
+- [x] `TaskTable.vue` の `import CanselButton`（typo）を `CancelButton` に修正、テンプレート内の使用箇所も合わせて修正
+- [x] `useDeleteTask` のエラーメッセージ問題は、タスク 1-1 のリファクタで `deleteTask` に統合済みだったため対応不要と判断
 
 ### ブランチ: `fix/done-view-onmounted`
 

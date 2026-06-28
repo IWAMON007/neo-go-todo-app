@@ -4,8 +4,8 @@ import { useEditTask } from '../composables/useTask';
 import type { Todo } from '../types/todo';
 import EditButton from './EditButton.vue';
 import SaveButton from './SaveButton.vue';
-import CanselButton from './CancelButton.vue';
 import DoneButton from './DoneButton.vue';
+import CancelButton from './CancelButton.vue';
 import BaseTable from './layouts/BaseTable.vue';
 import { computed } from 'vue';
 
@@ -52,7 +52,7 @@ const activeTodoList = computed(() => todoList.filter((todo) => !todo.IsDone));
                     <td v-else class="edit-cell">
                         <div class="cell-inner">
                             <SaveButton :taskId="todo.ID" />
-                            <CanselButton />
+                            <CancelButton />
                         </div>
                     </td>
 
