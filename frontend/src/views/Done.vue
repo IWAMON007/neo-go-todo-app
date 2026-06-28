@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onErrorCaptured, onMounted } from 'vue';
 import { todoList, getTodoList } from '../composables/useTask';
 import DoneTaskTable from '../components/DoneTaskTable.vue';
 
-onMounted(async () => {
-    await getTodoList();
+onMounted(() => {
+    getTodoList();
+});
+
+onErrorCaptured((error) => {
+    alert(error.message);
+    return false;
 });
 </script>
 
