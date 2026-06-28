@@ -14,12 +14,7 @@
 
 #### ~~1-3. TaskTable の責務分離~~ → 完了（`refactor/task-table-split`）
 
-#### 1-4. Done.vue のデータ取得バグ修正
-
-- [ ] `Done.vue` は `getTodoList()` を呼んでいない（`onMounted` なし）
-- [ ] `/done` に直接アクセスすると一覧が空になるバグがある
-- [ ] コメントアウトされた `watch` コードも整理する
-- **学べること**: Vue のライフサイクル・ルート直接アクセスを考慮した設計
+#### ~~1-4. Done.vue のデータ取得バグ修正~~ → 完了（`fix/done-view-onmounted`）
 
 #### 1-5. 型安全性の改善
 
@@ -76,6 +71,16 @@
 - Claude にテストを書いてもらい、それが通る実装にする方針
 
 ## 完了
+
+### ブランチ: `fix/done-view-onmounted`
+
+> ブランチ名は `onMounted` 修正を想定していたが、調査の結果 `Done.vue` には既に `onMounted` が実装済みだった。
+> 代わりに同ブランチで以下のバグ修正・改善を実施。
+
+- [x] `TaskTable.vue` / `DoneTaskTable.vue` に `IsDone` によるフィルタリングがなく、DoneButton 押下後もタスクが消えないバグを修正
+- [x] `v-for` + `v-if` の組み合わせを `computed` によるフィルタ済みリストに変更（`activeTodoList` / `doneTodoList`）
+- [x] `Done.vue` の `onMounted` から不要な `async/await` を削除（`apiFetch` 内で `try/catch` が完結しているため）
+- [x] `Done.vue` に `onErrorCaptured` を追加（`Home.vue` と同じエラーハンドリングパターンに統一）
 
 ### ブランチ: `refactor/task-table-split`
 

@@ -1,11 +1,14 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import type { Todo } from '../types/todo';
 import DeleteButton from './DeleteButton.vue';
 import BaseTable from './layouts/BaseTable.vue';
 
-defineProps<{
+const { todoList } = defineProps<{
     todoList: Todo[];
 }>();
+
+const doneTodoList = computed(() => todoList.filter((todo) => todo.IsDone));
 </script>
 
 <template>
@@ -18,14 +21,12 @@ defineProps<{
                 </tr>
             </thead>
             <tbody>
-                <template v-for="todo in todoList" :key="todo.ID">
-                    <tr>
-                        <td>{{ todo.Task }}</td>
-                        <td class="delete-cell">
-                            <DeleteButton :taskId="todo.ID" />
-                        </td>
-                    </tr>
-                </template>
+                <tr v-for="todo in doneTodoList" :key="todo.ID">
+                    <td>{{ todo.Task }}</td>
+                    <td class="delete-cell">
+                        <DeleteButton :taskId="todo.ID" />
+                    </td>
+                </tr>
             </tbody>
         </table>
     </BaseTable>

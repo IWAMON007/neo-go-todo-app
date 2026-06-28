@@ -7,13 +7,16 @@ import SaveButton from './SaveButton.vue';
 import CanselButton from './CancelButton.vue';
 import DoneButton from './DoneButton.vue';
 import BaseTable from './layouts/BaseTable.vue';
+import { computed } from 'vue';
 
-defineProps<{
+const { todoList } = defineProps<{
     todoList: Todo[];
 }>();
 
 // 編集状態管理
 const { editingId, editingText } = useEditTask();
+
+const activeTodoList = computed(() => todoList.filter((todo) => !todo.IsDone));
 </script>
 
 <template>
@@ -27,38 +30,36 @@ const { editingId, editingText } = useEditTask();
                 </tr>
             </thead>
             <tbody>
-                <template v-for="todo in todoList" :key="todo.ID">
-                    <tr>
-                        <td class="task-cell">
-                            <input
-                                v-if="editingId === todo.ID"
-                                v-model="editingText"
-                                type="text"
-                                class="task-input"
-                                autofocus
-                            />
+                <tr v-for="todo in activeTodoList" :key="todo.ID">
+                    <td class="task-cell">
+                        <input
+                            v-if="editingId === todo.ID"
+                            v-model="editingText"
+                            type="text"
+                            class="task-input"
+                            autofocus
+                        />
 
-                            <span v-else>{{ todo.Task }}</span>
-                        </td>
+                        <span v-else>{{ todo.Task }}</span>
+                    </td>
 
-                        <td v-if="editingId !== todo.ID" class="edit-cell">
-                            <div class="cell-inner">
-                                <EditButton :taskId="todo.ID" />
-                            </div>
-                        </td>
+                    <td v-if="editingId !== todo.ID" class="edit-cell">
+                        <div class="cell-inner">
+                            <EditButton :taskId="todo.ID" />
+                        </div>
+                    </td>
 
-                        <td v-else class="edit-cell">
-                            <div class="cell-inner">
-                                <SaveButton :taskId="todo.ID" />
-                                <CanselButton />
-                            </div>
-                        </td>
+                    <td v-else class="edit-cell">
+                        <div class="cell-inner">
+                            <SaveButton :taskId="todo.ID" />
+                            <CanselButton />
+                        </div>
+                    </td>
 
-                        <td class="done-cell">
-                            <DoneButton :taskId="todo.ID" />
-                        </td>
-                    </tr>
-                </template>
+                    <td class="done-cell">
+                        <DoneButton :taskId="todo.ID" />
+                    </td>
+                </tr>
             </tbody>
         </table>
     </BaseTable>
