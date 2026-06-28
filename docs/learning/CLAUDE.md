@@ -6,16 +6,28 @@
 docs/learning/
 ├── CLAUDE.md                        # このファイル。運用ルールを記載
 ├── daily/
-│   ├── _template.md                 # dailyファイルのテンプレート
-│   ├── 2026-05-15.md                # 日付ごとの記録（都度追記）
-│   └── ...
+│   └── _template.md                 # dailyファイルのテンプレート
 ├── inbox/                           # 整理済みdailyのアーカイブ
-│   └── 2026-05-14.md
+│   ├── 2026-05-15.md
+│   ├── 2026-05-17.md
+│   ├── 2026-05-30.md
+│   ├── 2026-06-17.md
+│   ├── 2026-06-27.md
+│   └── 2026-06-28.md
 └── knowledge-vault/                 # トピック別に整理された知識
     ├── vue/
+    │   ├── computed-filter.md       # computed によるリストフィルタリング
+    │   ├── lifecycle-async.md       # onMounted と async/await
+    │   ├── component-split.md      # コンポーネント分割の判断軸
+    │   ├── module-scope-state.md   # モジュールスコープによる状態共有
+    │   ├── error-propagation.md    # エラーの伝播と onErrorCaptured
+    │   ├── slot-vs-props.md        # slot vs props の使い分け
+    │   └── css-variables-props.md  # CSS 変数を props 経由で渡す
     ├── typescript/
-    ├── go/
-    └── ...                          # 必要に応じて追加（docker, postgres など）
+    │   ├── generics.md             # ジェネリクス <T>
+    │   ├── unknown-vs-any.md       # unknown vs any（エラーハンドリング）
+    │   └── fetch-error-handling.md # fetch のエラーハンドリング
+    └── go/
 ```
 
 ## daily への記録ルール
@@ -32,13 +44,13 @@ docs/learning/
 - **質問の背景と答え** — 何を知りたくて聞いたか・どう解決したか
 - **実務を意識した視点** — 「現場ではどう使うか」「なぜこの設計か」という問いと答え
 - **Claude からの FB** — ユーザーの発言を `> ` で原文引用し、合っている点・ズレている点・補足すべき概念をフィードバックとして記載する
-  - 例: 「コンポーネント分割の判断軸は理解しているが、propsの型設計はまだ曖昧な印象」
-  - 例: 「実務を意識した質問ができており、設計の意図を掴もうとする姿勢が良い」
+    - 例: 「コンポーネント分割の判断軸は理解しているが、propsの型設計はまだ曖昧な印象」
+    - 例: 「実務を意識した質問ができており、設計の意図を掴もうとする姿勢が良い」
 - **コードの改善ポイント** — 修正を伴う場合は修正前の問題点と修正後の改善内容・理由をセットで記載する
 
 ## knowledge-vault への整理
 
-- 「トピックに整理して」と指示があったら、該当の daily を読み込んでトピック別に整理する
+- 「トピックに整理して」と指示があったら、該当の daily にある日付ごとのファイルを古い順から順番に読み込んでトピック別に整理する
 - 整理済みの daily は `inbox/` に移動してアーカイブする
 - 整理先は内容に応じて判断する（`vue/`, `typescript/`, `go/`, `docker/` など）
 - 既存のトピックに当てはまらない場合は新しいディレクトリを作成してよい
