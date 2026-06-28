@@ -16,11 +16,7 @@
 
 #### ~~1-4. Done.vue のデータ取得バグ修正~~ → 完了（`fix/done-view-onmounted`）
 
-#### 1-5. 型安全性の改善
-
-- [ ] 各composableの `catch (error: any)` を `catch (error: unknown)` に変更する
-- [ ] `error` を `unknown` で受けた場合のエラーメッセージ取り出し方を調べて実装する
-- **学べること**: TypeScript の `unknown` vs `any`・型ガード
+#### ~~1-5. 型安全性の改善~~ → 完了（`fix/done-view-onmounted` ブランチで対応）
 
 #### 1-6. 細かいバグ・コードの整理
 
@@ -81,6 +77,9 @@
 - [x] `v-for` + `v-if` の組み合わせを `computed` によるフィルタ済みリストに変更（`activeTodoList` / `doneTodoList`）
 - [x] `Done.vue` の `onMounted` から不要な `async/await` を削除（`apiFetch` 内で `try/catch` が完結しているため）
 - [x] `Done.vue` に `onErrorCaptured` を追加（`Home.vue` と同じエラーハンドリングパターンに統一）
+- [x] `useFetch.ts` の `catch (error: unknown)` で `instanceof Error` による型ガードを実装
+- [x] `if (!error)` の dead code を削除し、非 `Error` な例外は `new Error()` でラップして投げる形に修正
+- [x] `!response.ok` のエラーメッセージを汎用文言から `params.error.message`（呼び出し元固有）に変更
 
 ### ブランチ: `refactor/task-table-split`
 
